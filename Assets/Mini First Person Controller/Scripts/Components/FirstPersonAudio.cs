@@ -13,7 +13,7 @@ public class FirstPersonAudio : MonoBehaviour
     /// <summary> "Minimum velocity for moving audio to play" </summary>
     [SerializeField] private float _velocityThreshold = .01f;
     private Vector2 _lastCharacterPosition;
-    private Vector2 CurrentCharacterPosition => new Vector2(_character.transform.position.x, _character.transform.position.z);
+    private Vector2 CurrentCharacterPosition => new(_character.transform.position.x, _character.transform.position.z);
 
     [Header("Landing")]
     [SerializeField] private AudioSource _landingAudio;
@@ -48,8 +48,8 @@ public class FirstPersonAudio : MonoBehaviour
         if (_crouch)
         {
             _crouchStartAudio = GetOrCreateAudioSource("Crouch Start Audio");
-            _crouchStartAudio = GetOrCreateAudioSource("Crouched Audio");
-            _crouchStartAudio = GetOrCreateAudioSource("Crouch End Audio");
+            _crouchedAudio = GetOrCreateAudioSource("Crouched Audio");
+            _crouchEndAudio = GetOrCreateAudioSource("Crouch End Audio");
         }
     }
 
@@ -80,17 +80,12 @@ public class FirstPersonAudio : MonoBehaviour
     /// <param name="audioToPlay">Audio that should be playing.</param>
     void SetPlayingMovingAudio(AudioSource audioToPlay)
     {
-        // Pause all MovingAudios.
         foreach (var audio in MovingAudios.Where(audio => audio != audioToPlay && audio != null))
-        {
             audio.Pause();
-        }
 
         // Play audioToPlay if it was not playing.
         if (audioToPlay && !audioToPlay.isPlaying)
-        {
             audioToPlay.Play();
-        }
     }
 
     #region Play instant-related audios.
@@ -103,16 +98,11 @@ public class FirstPersonAudio : MonoBehaviour
     #region Subscribe/unsubscribe to events.
     void SubscribeToEvents()
     {
-        // PlayLandingAudio when Grounded.
         _groundCheck.Grounded += PlayLandingAudio;
 
-        // PlayJumpAudio when Jumped.
         if (_jump)
-        {
             _jump.Jumped += PlayJumpAudio;
-        }
 
-        // Play crouch audio on crouch start/end.
         if (_crouch)
         {
             _crouch.CrouchStart += PlayCrouchStartAudio;
@@ -122,16 +112,11 @@ public class FirstPersonAudio : MonoBehaviour
 
     void UnsubscribeToEvents()
     {
-        // Undo PlayLandingAudio when Grounded.
         _groundCheck.Grounded -= PlayLandingAudio;
 
-        // Undo PlayJumpAudio when Jumped.
         if (_jump)
-        {
             _jump.Jumped -= PlayJumpAudio;
-        }
 
-        // Undo play crouch audio on crouch start/end.
         if (_crouch)
         {
             _crouch.CrouchStart -= PlayCrouchStartAudio;
@@ -141,19 +126,15 @@ public class FirstPersonAudio : MonoBehaviour
     #endregion
 
     #region Utility.
-    /// <summary>
-    /// Get an existing AudioSource from a name or create one if it was not found.
-    /// </summary>
+    /// <summary>Get an existing AudioSource from a name or create one if it was not found.</summary>
     /// <param name="name">Name of the AudioSource to search for.</param>
     /// <returns>The created AudioSource.</returns>
     AudioSource GetOrCreateAudioSource(string name)
     {
-        // Try to get the audiosource.
         AudioSource result = System.Array.Find(GetComponentsInChildren<AudioSource>(), a => a.name == name);
         if (result)
             return result;
 
-        // Audiosource does not exist, create it.
         result = new GameObject(name).AddComponent<AudioSource>();
         result.spatialBlend = 1;
         result.playOnAwake = false;
@@ -166,13 +147,11 @@ public class FirstPersonAudio : MonoBehaviour
         if (!audio || clips.Length <= 0)
             return;
 
-        // Get a random clip. If possible, make sure that it's not the same as the clip that is already on the audiosource.
         AudioClip clip = clips[Random.Range(0, clips.Length)];
         if (clips.Length > 1)
             while (clip == audio.clip)
                 clip = clips[Random.Range(0, clips.Length)];
 
-        // Play the clip.
         audio.clip = clip;
         audio.Play();
     }

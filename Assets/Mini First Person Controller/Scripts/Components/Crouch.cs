@@ -63,23 +63,18 @@ public class Crouch : MonoBehaviour
                 CrouchStart?.Invoke();
             }
         }
-        else
+        else if (IsCrouched)
         {
-            if (IsCrouched)
+            if (_headToLower)
+                _headToLower.localPosition = new(_headToLower.localPosition.x, _defaultHeadYLocalPosition.Value, _headToLower.localPosition.z);
+            if (_colliderToLower)
             {
-                if (_headToLower)
-                    _headToLower.localPosition = new(_headToLower.localPosition.x, _defaultHeadYLocalPosition.Value, _headToLower.localPosition.z);
-
-                if (_colliderToLower)
-                {
-                    _colliderToLower.height = _defaultColliderHeight.Value;
-                    _colliderToLower.center = Vector3.up * _colliderToLower.height * .5f;
-                }
-
-                IsCrouched = false;
-                SetSpeedOverrideActive(false);
-                CrouchEnd?.Invoke();
+                _colliderToLower.height = _defaultColliderHeight.Value;
+                _colliderToLower.center = Vector3.up * _colliderToLower.height * .5f;
             }
+            IsCrouched = false;
+            SetSpeedOverrideActive(false);
+            CrouchEnd?.Invoke();
         }
     }
 
@@ -91,11 +86,15 @@ public class Crouch : MonoBehaviour
             return;
 
         if (state)
+        {
             if (!_movement.speedOverrides.Contains(SpeedOverride))
                 _movement.speedOverrides.Add(SpeedOverride);
+        }
         else
+        {
             if (_movement.speedOverrides.Contains(SpeedOverride))
                 _movement.speedOverrides.Remove(SpeedOverride);
+        }
     }
 
     private float SpeedOverride() => _movementSpeed;

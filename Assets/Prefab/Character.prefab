@@ -506,16 +506,28 @@ MonoBehaviour:
   _runningAudio: {fileID: 4157439651811459565}
   _velocityThreshold: 0.01
   _landingAudio: {fileID: 6731554416782466125}
-  _landingSFX: []
+  _landingSFX:
+  - {fileID: 8300000, guid: 9fcb6dc763cd0354da305b5de2091287, type: 3}
+  - {fileID: 8300000, guid: ab9637a2491abbf4ca9c9601321cbb88, type: 3}
+  - {fileID: 8300000, guid: 50b288ce0d5ac1e439827c5365c74c31, type: 3}
   _jump: {fileID: 8535038607800668328}
-  _jumpAudio: {fileID: 0}
-  _jumpSFX: []
+  _jumpAudio: {fileID: 2484026871154688797}
+  _jumpSFX:
+  - {fileID: 8300000, guid: 3888a1e1c52793144a6d07b8c508772e, type: 3}
+  - {fileID: 8300000, guid: 5b26cf3cd5f6b914a80e6d3476caaf86, type: 3}
+  - {fileID: 8300000, guid: b16dc74b7376aca46bd0c6be96c940fa, type: 3}
   _crouch: {fileID: 1700964753814754690}
-  _crouchStartAudio: {fileID: 6466759933471228219}
-  _crouchedAudio: {fileID: 0}
-  _crouchEndAudio: {fileID: 0}
-  _crouchStartSFX: []
-  _crouchEndSFX: []
+  _crouchStartAudio: {fileID: 6910272561665994652}
+  _crouchedAudio: {fileID: 5516990456861899077}
+  _crouchEndAudio: {fileID: 6466759933471228219}
+  _crouchStartSFX:
+  - {fileID: 8300000, guid: 9b910aa79c186384cb17f28fad642b0a, type: 3}
+  - {fileID: 8300000, guid: 8a49e3e94b1e34e47bc5f47c5233c5a5, type: 3}
+  - {fileID: 8300000, guid: 3e0e4a1bf1a03c24a85ad855f4be231e, type: 3}
+  _crouchEndSFX:
+  - {fileID: 8300000, guid: aac7fe48a39af6e46a2d48c5d2655976, type: 3}
+  - {fileID: 8300000, guid: e6f44b6fce71be34dbbd6d12cb3d3b8c, type: 3}
+  - {fileID: 8300000, guid: 9d46f9a0e3e8be44aa2dc581bd6e0c97, type: 3}
 --- !u!1 &5277573869477073605
 GameObject:
   m_ObjectHideFlags: 0
