@@ -2,16 +2,16 @@ using System;
 
 public class Slot
 {
-    private readonly IStorable _itemType;
+    private IStorable _itemType = null;
     private int _count = 0;
-
-    public Slot(IStorable itemType)
-    {
-        _itemType = itemType;
-    }
 
     public IStorable ItemType => _itemType;
     public int Count => _count;
+
+    public void SetType(IStorable itemType)
+    {
+        _itemType = itemType;
+    }
 
     /// <returns>Количество успешно добавленных предметов</returns>
     public int Add(int count = 1)
@@ -26,6 +26,8 @@ public class Slot
     {
         count = Math.Min(Math.Max(0, count), _count);
         _count -= count;
+        if (_count == 0)
+            SetType(null);
         return count;
     }
 }

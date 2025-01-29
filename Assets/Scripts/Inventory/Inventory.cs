@@ -42,10 +42,10 @@ public class Inventory
         }
         else
         {
-            index = Find(default);
+            index = Find(null);
             if (index != -1)
             {
-                _slots[index] = new Slot(item);
+                _slots[index].SetType(item);
                 return Add(item, count - _slots[index].Add(count), index + 1);
             }
             else
