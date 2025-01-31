@@ -5,6 +5,7 @@ using UnityEngine;
 public class Walk : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
+    [SerializeField] public bool canMove = true;
 
     private Rigidbody2D body;
     private Vector2 movement;
@@ -16,10 +17,17 @@ public class Walk : MonoBehaviour
 
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        if (canMove)
+        {
+            movement.x = Input.GetAxisRaw("Horizontal");
+            movement.y = Input.GetAxisRaw("Vertical");
 
-        movement = movement.normalized;
+            movement = movement.normalized;
+        }
+        else
+        {
+            movement = Vector2.zero;
+        }
     }
 
     void FixedUpdate()
