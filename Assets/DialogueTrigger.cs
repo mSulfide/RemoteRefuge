@@ -5,18 +5,23 @@ using UnityEngine;
 public class DialogueTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private GameObject buttonYes;
+    [SerializeField] private GameObject buttonNo;
 
     private bool isPlayerInTrigger = false;
+    private bool isPlayerOnDialogue = false;
     private Walk playerMovement;
 
     void Start()
     {
         dialogueBox.SetActive(false);
+        buttonNo.SetActive(false);
+        buttonYes.SetActive(false);
     }
 
     void Update()
     {
-        if (isPlayerInTrigger && Input.GetMouseButtonDown(0))
+        if (isPlayerInTrigger && Input.GetMouseButtonDown(0) && !isPlayerOnDialogue)
         {
             ActiveDialogue();
         }
@@ -36,22 +41,38 @@ public class DialogueTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerInTrigger = false;
-            dialogueBox.SetActive(false);
+            dialogueBox.SetActive(false);                    
         }
     }
 
     void ActiveDialogue()
     {
-        dialogueBox.SetActive(!dialogueBox.activeSelf);
+        dialogueBox.SetActive(true);
+        buttonNo.SetActive(true);
+        buttonYes.SetActive(true);
+        playerMovement.canMove = false;
+        isPlayerOnDialogue = true;
+    }
 
-        if (dialogueBox.activeSelf)
-        {
-            playerMovement.canMove = false;
-        }
-        else
-        {
-            playerMovement.canMove = true;
-        }
+    void CloseDialogue()
+    {
+        dialogueBox.SetActive(false);
+        buttonNo.SetActive(false);
+        buttonYes.SetActive(false);
+        playerMovement.canMove = true;
+        isPlayerOnDialogue = false;
+    }
+
+    public void OnYesButtonPressed()
+    {
+        Debug.Log("Вы нажали 'Да'");
+        CloseDialogue();
+    }
+
+    public void OnNoButtonPressed()
+    {
+        Debug.Log("Вы нажали 'Нет'");
+        CloseDialogue();
     }
 
 }
