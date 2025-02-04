@@ -65,13 +65,11 @@ public class DialogueTrigger : MonoBehaviour
 
     public void OnYesButtonPressed()
     {
-        Debug.Log("Вы нажали 'Да'");
         CloseDialogue();
     }
 
     public void OnNoButtonPressed()
     {
-        Debug.Log("Вы нажали 'Нет'");
         CloseDialogue();
     }
 
